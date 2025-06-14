@@ -1,0 +1,14 @@
+---
+- name: Desplegar Zabbix Server central
+  hosts: zabbix_server
+  become: true
+
+  vars_files:
+    - group_vars/zabbix_server.yml
+
+  roles:
+    - role: geerlingguy.docker     # instala engine + compose plugin
+    - role: community.general.ufw  # abre puertos 80/443/10051
+    - role: keepalived             # VIP para HA (solo srv-zbx01)
+    - role: haproxy                # balanceo frontends
+    - role: zabbix_server_docker   # copia compose + .env + levanta stack

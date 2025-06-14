@@ -1,0 +1,12 @@
+---
+- name: Desplegar Zabbix Proxy
+  hosts: zabbix_proxy
+  become: true
+
+  vars_files:
+    - group_vars/zabbix_proxy.yml
+
+  roles:
+    - role: geerlingguy.docker
+    - role: community.general.ufw   # abre 10051/10050 local
+    - role: zabbix_proxy_docker

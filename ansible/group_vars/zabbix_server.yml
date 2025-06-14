@@ -1,0 +1,3 @@
+postgres_user: zbx_admin
+postgres_password: "MsfalgQdqp1316"
+zbx_fqdn: "zabbix.phoenixstd.com"

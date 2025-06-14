@@ -1,0 +1,27 @@
+networks:
+  zabbix-proxy-net:
+    driver: bridge
+
+services:
+  zabbix-proxy:
+    image: zabbix/zabbix-proxy-sqlite3:6.5-latest
+    environment:
+      ZBX_HOSTNAME: ${PROXY_NAME}
+      ZBX_SERVER_HOST: ${SERVER_HOST}
+      ZBX_PROXYMODE: 0         # 0 = activo
+      ZBX_TLSCONNECT: psk
+      ZBX_TLSPSK_FILE: /etc/zabbix/psk/proxy.psk
+    volumes:
+      - ./psk:/etc/zabbix/psk:ro
+      - ./data:/var/lib/zabbix
+    networks:
+      - zabbix-proxy-net
+    restart: unless-stopped
+
+  zabbix-agent:
+    image: zabbix/zabbix-agent:6.5-latest
+    environment:
+      ZBX_SERVER_HOST: zabbix-proxy
+    networks:
+      - zabbix-proxy-net
+    restart: unless-stopped

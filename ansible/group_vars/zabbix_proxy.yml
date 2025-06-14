@@ -1,0 +1,2 @@
+proxy_server_host: "zabbix.phoenixstd.com"
+psk_secret: "0123456789ABCDEF0123456789ABCDEF"
